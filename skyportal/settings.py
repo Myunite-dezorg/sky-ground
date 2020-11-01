@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #APP_
     'pages',
+    'aircraft',
 ]
 
 MIDDLEWARE = [
