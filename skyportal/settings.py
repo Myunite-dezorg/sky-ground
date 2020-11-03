@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,6 +42,9 @@ INSTALLED_APPS = [
     #APP_
     'pages',
     'aircraft',
+    #tools
+    'ckeditor',
+    'modelclone',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +58,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'skyportal.urls'
+
 
 TEMPLATES = [
     {
@@ -80,7 +85,7 @@ WSGI_APPLICATION = 'skyportal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sky_db_fleet',
+        'NAME': 'skybase_db',
         'USER': 'postgres',
         'PASSWORD': '19831112',
         'HOST': 'localhost',
