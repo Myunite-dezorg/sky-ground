@@ -80,18 +80,41 @@ class AircraftSpec(models.Model):
          ('RRTrentXWB374kN (83,000 LBF)', 'RR Trent XWB 374kN (83,000 LBF)'),
          ('RRTrentXWB432kN (97,000 LBF)', 'RR Trent XWB 432kN (97,000 LBF)'),
      )
-
-     msrmnt_attrs = {'max_digits': 6,
-                'decimal_places': 3,
-                'blank': True,
-                'null': True}
-
+     msrmnt_attrs = {
+                 'max_digits': 6,
+                 'decimal_places': 3,
+                 'blank': True,
+                 'null': True
+                 }
 
      type = models.OneToOneField(Aircraft, on_delete = models.CASCADE, primary_key = True)
      range = models.DecimalField(('Range'), **msrmnt_attrs)
-     seating = models.IntegerField(('Seating'), null=True, blank=True)
+
      replaces_current_model = models.CharField(max_length=30, blank=True)
      competes_against = models.CharField(max_length=30, blank=True)
+
+
+     engines = models.CharField(choices=engines_choices, blank=True, max_length=55, )
+     average_unit_price = models.CharField(max_length=15, blank=True)
+
+     def __str__(self, ):
+        return str(self.type)
+
+     class Meta:
+        verbose_name = "Aircraft Specification"
+
+
+class AircraftDimensions(models.Model):
+     #Base dimensions of aircraft - model fields
+     msrmnt_attrs = {
+                'max_digits': 6,
+                'decimal_places': 3,
+                'blank': True,
+                'null': True
+                }
+
+
+     type = models.OneToOneField(Aircraft, on_delete = models.CASCADE, primary_key = True)
      length = models.DecimalField(('Length'), **msrmnt_attrs)
      wing_span = models.DecimalField(('Wing_span'), **msrmnt_attrs)
      height = models.DecimalField(('Height'), **msrmnt_attrs)
@@ -99,22 +122,79 @@ class AircraftSpec(models.Model):
      cabin_width_Int = models.DecimalField(('Cabin width interior'), **msrmnt_attrs)
      track = models.DecimalField(('Track'), **msrmnt_attrs)
      wheelbase = models.DecimalField(('wheelbase'), **msrmnt_attrs)
-     maximum_operating_speed = models.DecimalField(('Maximum operating speed'), **msrmnt_attrs)
-     maximum_ramp_weight = models.DecimalField(('Maximum ramp weight'), **msrmnt_attrs)
-     maximum_take_off_weight = models.DecimalField(('Maximum take off weight'), **msrmnt_attrs)
-     maximum_landing_weight = models.DecimalField(('Maximum landing weight'), **msrmnt_attrs)
-     maximum_zero_fuel_weight = models.DecimalField(('Maximum zero fuel weight'), **msrmnt_attrs)
-     maximum_fuel_capacity = models.DecimalField(('Maximum fuel capacity'), **msrmnt_attrs)
-     engines = models.CharField(choices=engines_choices, blank=True, max_length=55, )
-     average_unit_price = models.CharField(max_length=15, blank=True)
-     def __str__(self, ):
-        return str(self.type)
 
-     # def __unicode__(self):
-     #    return self.type
+     def __str__(self, ):
+         return str(self.type)
 
      class Meta:
-        verbose_name = "Aircraft Specification"
+        verbose_name = "Aircraft Dimensions"
+
+
+class AircraftPerfomance(models.Model):
+    #Perfomance of aircraft - model fields
+    msrmnt_attrs = {
+               'max_digits': 6,
+               'decimal_places': 3,
+               'blank': True,
+               'null': True
+               }
+
+    type = models.OneToOneField(Aircraft, on_delete = models.CASCADE, primary_key = True)
+    maximum_operating_speed = models.DecimalField(('Maximum operating speed'), **msrmnt_attrs)
+    maximum_ramp_weight = models.DecimalField(('Maximum ramp weight'), **msrmnt_attrs)
+    maximum_take_off_weight = models.DecimalField(('Maximum take off weight'), **msrmnt_attrs)
+    maximum_landing_weight = models.DecimalField(('Maximum landing weight'), **msrmnt_attrs)
+    maximum_zero_fuel_weight = models.DecimalField(('Maximum zero fuel weight'), **msrmnt_attrs)
+    maximum_fuel_capacity = models.DecimalField(('Maximum fuel capacity'), **msrmnt_attrs)
+
+    def __str__(self, ):
+        return str(self.type)
+
+    class Meta:
+       verbose_name = "Aircraft Perfomances"
+
+class AircraftCapacity(models.Model):
+    #Capacity of aircraft - model fields
+
+
+    type = models.OneToOneField(Aircraft, on_delete = models.CASCADE, primary_key = True)
+    seating = models.IntegerField(('Seating'), null=True, blank=True)
+    first_class = models.IntegerField(('First class'), null=True, blank=True)
+    business_class = models.IntegerField(('Business class'), null=True, blank=True)
+    economy_class = models.IntegerField(('Economy class'), null=True, blank=True)
+
+
+    def __str__(self, ):
+        return str(self.type)
+
+    class Meta:
+       verbose_name = "Aircraft Capacities"
+
+class AircraftFreightCapacity(models.Model):
+
+        type = models.OneToOneField(Aircraft, on_delete = models.CASCADE, primary_key = True)
+        standard_uld_configuration = models.CharField(max_length=55)
+        forwardhold = models.CharField(max_length=55)
+        afthold = models.CharField(max_length=55)
+        cargo_volume = models.CharField(max_length=55)
+        Doorsizes = models.CharField(max_length=55)
+        cargo_pay_load = models.CharField(max_length=55)
+        maximum_permitted_heigh = models.CharField(max_length=55)
+
+        def __str__(self, ):
+            return str(self.type)
+
+        class Meta:
+           verbose_name = "Freught Capacities"
+
+
+class AircraftEngines(models.Model):
+     type = models.OneToOneField(Aircraft, on_delete = models.CASCADE, primary_key = True)
+     title = models.CharField(max_length=55)
+     description = RichTextField()
+
+
+
 
 
 
